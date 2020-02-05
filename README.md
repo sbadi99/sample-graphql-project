@@ -5,9 +5,11 @@
 * From a UI perspective, used Android Cardviews and Recylerview and Andorid toolbar Search best practices 
 * From a architecture standpoint, used the LiveData/ViewModel approach (per Android architectural components) to allow for UI layer to be decoupled from the business layer. 
 * Utilizes Apollo along with Graphql
-* User is able to search by Mission name or Rocket name or Launch Year
+* User is able to search space lauches that include both past & upcoming launches by Mission name or Rocket name or Launch Year. The results are currently sorted by launch date.
 
 Extra's : Clicking on the search list item will launch the YouTube video if valid video link is available. Also handles progress indicator during fetching of search results e.t.c
+
+I have tested the project by pulling down the project from the git repo and its funtional on my end. In the rare event, if you any issues building the project on your end or any gradle local dependencies issues (please ignore unsupported module exception if pulling the git repo)
 
 If the team has any questions or need any clarification during the review process let me know and I will be happy to address any queries the team might have.
 
