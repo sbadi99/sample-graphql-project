@@ -11,7 +11,7 @@ Extra's : Clicking on the search list item will launch the YouTube video if vali
 
 I have tested the project by pulling down the project from the git repo and its funtional on my end. In the rare event, if you any issues building the project on your end or any gradle local dependencies issues (please ignore unsupported module exception if pulling the git repo)
 
-If the team has any questions or need any clarification during the review process let me know and I will be happy to address any queries the team might have.
+If the team has any rare gradle build locally building the project or any questions or need any clarification during the review process let me know and I will be happy to quickly address any queries the team might have.
 
 
 
