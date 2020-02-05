@@ -6,20 +6,20 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.apollographql.apollo.SpaceLaunchesQuery.Launch
 import com.evgo.sample.R
-import com.evgo.sample.ui.CardAdapter.SearchResultsViewHolder
+import com.evgo.sample.ui.SearchCardAdapter.SearchResultsViewHolder
 import com.evgo.sample.utils.StringUtils
 import java.util.ArrayList
 
+/**
+ * The SearchCardAdapter item adapter class extends RecyclerView.Adapter
+ */
 
-class CardAdapter(private val context: Context,
+class SearchCardAdapter(private val context: Context,
     var searchResult: ArrayList<Launch>) : Adapter<SearchResultsViewHolder>() {
 
   /**
@@ -43,6 +43,7 @@ class CardAdapter(private val context: Context,
    * @return A new ViewHolder that holds a View of the given view type.
    * @see .getItemViewType
    * @see .onBindViewHolder
+   *
    */
   override fun onCreateViewHolder(parent: ViewGroup,
       viewType: Int): SearchResultsViewHolder {
@@ -56,8 +57,10 @@ class CardAdapter(private val context: Context,
     val launchesPast = searchResult[position]
     holder.setDetails(launchesPast)
 
+    // This will launch the youtube video when any item with a valid video link in the search list is clicked
     holder.itemView.setOnClickListener {
-      context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(searchResult[position].links()?.video_link())))
+      context.startActivity(
+          Intent(Intent.ACTION_VIEW, Uri.parse(searchResult[position].links()?.video_link())))
     }
   }
 
@@ -65,12 +68,15 @@ class CardAdapter(private val context: Context,
     return searchResult.size
   }
 
+  /**
+   * Content ViewHolder containing search results item elements
+   */
   inner class SearchResultsViewHolder(
       itemView: View) : ViewHolder(itemView) {
-     val missionName: TextView = itemView.findViewById(R.id.mission_name)
-     val rocketName: TextView = itemView.findViewById(R.id.rocket_name)
+    val missionName: TextView = itemView.findViewById(R.id.mission_name)
+    val rocketName: TextView = itemView.findViewById(R.id.rocket_name)
     val launchDate: TextView = itemView.findViewById(R.id.launch_date)
-     val videoLink: TextView = itemView.findViewById(R.id.video_link)
+    val videoLink: TextView = itemView.findViewById(R.id.video_link)
 
     fun setDetails(searchResult: Launch) {
 
@@ -92,14 +98,6 @@ class CardAdapter(private val context: Context,
           searchResult.links()?.video_link().toString())
     }
 
-  }
-
-  class myWebViewClient : WebViewClient() {
-    override fun shouldOverrideUrlLoading(view: WebView,
-        url: String): Boolean {
-      view.loadUrl(url)
-      return true
-    }
   }
 
 }

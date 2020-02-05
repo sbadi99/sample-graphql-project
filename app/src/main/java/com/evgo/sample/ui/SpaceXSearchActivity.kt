@@ -36,7 +36,7 @@ import timber.log.Timber
 class SpaceXSearchActivity : AppCompatActivity() {
   private var evgoApp: EvgoApp? = null
   private var searchRecyclerView: RecyclerView? = null
-  private var searchAdapter: CardAdapter? = null
+  private var searchAdapterSearch: SearchCardAdapter? = null
   private var searchQuery: String? = null
 
   private var priceListObserver: Observer<Data>? = null
@@ -52,8 +52,11 @@ class SpaceXSearchActivity : AppCompatActivity() {
     evgoApp = application as EvgoApp
     setupUi()
 
+    //initializing the search view model & live data observer
     initSearchViewModel()
     setUpSearchLiveDataObserver()
+
+    //intro message on first launch
     empty_results.text = getString(R.string.intro_message)
     empty_results.visibility = View.VISIBLE
   }
@@ -97,19 +100,22 @@ class SpaceXSearchActivity : AppCompatActivity() {
           }
         }
       }
-
     }
-
-    
     searchViewModel?.searchLiveData?.observe(this,
         priceListObserver as Observer<Data>)
   }
 
+  /**
+   * Setting up the UI with the searchRecyclerView (search list)
+   */
   private fun setupUi() {
     searchRecyclerView = search_recyclerview
     searchRecyclerView?.layoutManager = LinearLayoutManager(this)
   }
 
+  /**
+   * This method handles the search query flow in the native Android search view in the toolbar
+   */
   override fun onNewIntent(intent: Intent?) {
     super.onNewIntent(intent)
     // Verify the action and get the query
@@ -121,7 +127,7 @@ class SpaceXSearchActivity : AppCompatActivity() {
             //mission name or rocket name search
             when {
               !isNumeric(searchQuery) -> {
-                showDialog()
+                showMissionOrRocketNameDialog()
               }
               else -> {
                 //year search
@@ -135,12 +141,18 @@ class SpaceXSearchActivity : AppCompatActivity() {
     }
   }
 
+  /**
+   * Populating the searchRecyclerView adapter with the search result data
+   */
   private fun populateSearchUi(
       launchesPast: ArrayList<Launch>) {
-    searchAdapter = CardAdapter(this, launchesPast)
-    searchRecyclerView?.adapter = searchAdapter
+    searchAdapterSearch = SearchCardAdapter(this, launchesPast)
+    searchRecyclerView?.adapter = searchAdapterSearch
   }
 
+  /**
+   * Creating the search menu icon on the toolbar & relevant search wire-up logic
+   */
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
     val inflater = menuInflater
@@ -157,14 +169,20 @@ class SpaceXSearchActivity : AppCompatActivity() {
   }
 
 
+  /**
+   * Resetting the UI here
+   */
   private fun resetUi() {
-    searchAdapter?.searchResult?.clear()
+    searchAdapterSearch?.searchResult?.clear()
     searchRecyclerView?.recycledViewPool?.clear();
     searchRecyclerView?.adapter?.notifyDataSetChanged()
   }
 
-
-  private fun showDialog() {
+  /**
+   * Show the dialog whether user prefers to search by mission name or rocket name
+   * based on user selection we can trigger either a mission name or rocket name search to fetch results
+   */
+  private fun showMissionOrRocketNameDialog() {
     val options = arrayOf(getString(string.mission_name), getString(string.rocket_name))
     var selectedItem = 0
     val builder = AlertDialog.Builder(this)
@@ -197,6 +215,9 @@ class SpaceXSearchActivity : AppCompatActivity() {
 
   }
 
+  /**
+   * Initializing the Search ViewModel and associated SearchLiveData
+   */
   private fun initSearchViewModel() {
     searchViewModel = ViewModelProviders.of(this).get(SearchViewModel::class.java)
     evgoApp?.let { searchViewModel?.setSearchLiveData(it) }

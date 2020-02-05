@@ -9,6 +9,11 @@ import android.view.View
 class ViewUtils{
 
   companion object{
+    /**
+     * toggle progress bar visibility
+     * @param view the view
+     * @param show to show the view or not
+     */
     fun toggleProgressIndicator(view: View?,show: Boolean = false) {
       when {
         show -> view?.visibility = View.VISIBLE

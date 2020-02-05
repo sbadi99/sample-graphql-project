@@ -14,13 +14,21 @@ import com.evgo.sample.utils.StringUtils.Companion
 import timber.log.Timber
 
 /**
- * SearchLiveData manages the API data handling
+ * SearchLiveData manages the API data handling using ViewModel/LiveData android archtecture best practices
  * Allowing to decouple the API logic from the UI layer
  */
 class SearchLiveData(application: EvgoApp) : LiveData<Data>(), ViewModelInterface {
 
   private var evgoApp: EvgoApp = application
   private var error: Any? = null
+
+  /**
+   * This method fetches the search results using Apollo onResponse & onFailure callbacks
+   * postValue triggers the livedata observer in the SpaceXSearchActivity UI can update when new data is received here
+   * @param missionName - the mission name
+   * @param rocketName - the rocket name
+   * @param launchYear - the launch year
+   */
 
   fun fetchSpaceLaunches(missionName: String = Companion.EMPTY, rocketName: String = Companion.EMPTY,
       launchYear: String = Companion.EMPTY) {
@@ -41,6 +49,13 @@ class SearchLiveData(application: EvgoApp) : LiveData<Data>(), ViewModelInterfac
     })
   }
 
+  /**
+   * This method builds the Apollo query to search by mission name or rocket name or launch year
+   * for e.g if user searches by mission name or rocket name or year, the the other parameters default to empty using kotlin
+   * @param missionName - the mission name
+   * @param rocketName - the rocket name
+   * @param launchYear - the launch year
+   */
   private fun buildSearchQuery(
       missionName: String = StringUtils.EMPTY, rocketName: String = StringUtils.EMPTY,
       launchYear: String = StringUtils.EMPTY): ApolloQueryCall<Data>? {
