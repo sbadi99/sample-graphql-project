@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <dimen name="small">1dp</dimen>
+  <dimen name="medium">12dp</dimen>
+  <dimen name="corner_radius">2dp</dimen>
+  <dimen name="card_elevation">6dp</dimen>
+</resources>

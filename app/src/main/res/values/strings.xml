@@ -1,0 +1,14 @@
+<resources>
+  <string name="app_name">SpaceX Search</string>
+  <string name="search_hint"><font size="14">Mission name or Rocket name or Year</font></string>
+  <string name="empty_results">No search results found. Try searching again.</string>
+  <string name="intro_message">Welcome to SpaceX Search! The search results include both upcoming and past launches sorted by launch date.
+        \n\nPlease search above by Mission name (e.g. Starlink 3) or Rocket name (e.g. Falcon 9) or Launch year (e.g. 2019).
+        \n\nFor best results type the mission name or rocket name as completely as possible. Full-text searching is not currently supported.</string>
+  <string name="mission_name">Mission name</string>
+  <string name="rocket_name">Rocket name</string>
+  <string name="search_options">Select a search option:</string>
+  <string name="ok">OK</string>
+  <string name="video_link_label">Video Link:\n</string>
+  <string name="youtube_key">AIzaSyD9o4GyueTqusixCaHAfw0WfU0E9xLEi8w</string>
+</resources>

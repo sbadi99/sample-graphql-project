@@ -1,0 +1,12 @@
+query SpaceLaunchesQuery($missionName: String!, $rocketName: String!, $launchYear: String!, $limit: Int!) {
+  launches(find: {mission_name: $missionName, rocket_name: $rocketName, launch_year: $launchYear}, limit: $limit) {
+    mission_name
+    rocket {
+      rocket_name
+    }
+    launch_date_unix
+    links {
+      video_link
+    }
+  }
+}
